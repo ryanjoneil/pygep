@@ -1,0 +1,7 @@
+PyGEP requires Python 2.5 and uses setuptools for its installation.
+This should be as easy as:
+
+	easy_install PyGEP
+
+Source and egg packages are available from:
+http://code.google.com/p/pygep/downloads/list

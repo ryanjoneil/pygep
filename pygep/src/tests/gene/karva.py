@@ -1,0 +1,38 @@
+from pygep.functions.arithmetic import *
+from pygep.gene import KarvaGene
+import unittest
+
+
+class Foo(object):
+    a = 5.
+
+
+class KarvaTest(unittest.TestCase):
+    '''Tests basic functionality of Karva genes'''
+    def setUp(self):
+        self.gene = KarvaGene([add, subtract, 'a', 1, 'a'], 2)
+    
+    
+    def testEvaluation(self):
+        f = Foo()
+        self.assertEqual(1, self.gene(f))
+        self.assertTrue((f,) in getattr(self.gene, self.gene.__call__.memo))
+        
+
+    def testCodingLocation(self):
+        self.assertEqual(4, self.gene.coding)
+        self.assertEqual(0, self.gene.derive([(0, ['a'])]).coding)
+    
+    
+    def testDerivation(self):
+        g = self.gene.derive([(0, ['a']), (3, [add, add])])
+        self.assertEqual(['a', subtract, 'a', add, add], g.alleles)
+        self.assertEqual(self.gene, self.gene.derive([(2, ['a'])]))
+    
+    
+    def testRepresentation(self):
+        self.assertEqual('+-a1a', repr(self.gene))
+
+
+if __name__ == '__main__':
+    unittest.main()

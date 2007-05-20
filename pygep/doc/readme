@@ -1,0 +1,18 @@
+Gene Expression Programming for Python
+http://code.google.com/p/pygep/
+ryanjoneil ~ at ~ gmail.com
+
+This software is licensed under the GPL 2.0.
+
+PyGEP is a simple library suitable for academic study of GEP (Gene Expression 
+Programming) in Python 2.5, aiming for ease of use and rapid implementation. It 
+provides standard multigenic chromosomes; a population class using elitism and 
+fitness scaling for selection; mutation, crossover and transposition operators; 
+and some standard GEP functions and linkers.
+
+PyGEP is intended for research, not commercial application. Those interested in 
+a full GEP system are advised to visit Gepsoft, makers of GeneXproTools.
+
+To the subscribe to the PyGEP discussion list, send an email to 
+pygep-request@freelists.org with 'subscribe' in the subject line. The list is 
+very low volume at this time. 
