@@ -21,7 +21,6 @@ over time, allowing selection, replication, and variation operators.
 '''
 
 from itertools import izip
-from operator import attrgetter
 from pygep.functions.linkers import default_linker
 from pygep.util import stats
 import random, string
@@ -142,7 +141,7 @@ class Population(object):
     age  = property(lambda self: self.__age, doc='Generation number')
     best = property(
         # Gives preference to later individuals tied for best
-        lambda self: max(reversed(self.population), key=attrgetter('fitness')),
+        lambda self: max(reversed(self.population)),
         doc='The best Chromosome of the current generation'
     )
 

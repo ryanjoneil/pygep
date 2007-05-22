@@ -59,3 +59,17 @@ A:	Chromosome evaluation doesn't swallow run time errors, so anything like
 	                pass
 	
 	        return total	
+
+
+-------------------------------------------------------------------------------
+Q:	Why Python?
+
+A:	I needed a GEP system in which I could easily play with its internals,
+	change the way genes function, and add new functions and linkers.  Nothing
+	like this existed yet, and Python seemed a good fit to those requirements.
+	
+	Of course, this means it is much slower than something like GeneXproTools,
+	but for my purposes that doesn't matter because performance of EC-type
+	systems is based on convergence rate, not the speed of a given API.  That
+	said, we may see a future with some of the heavier methods rewritten in
+	C as Python extensions (patches welcome).

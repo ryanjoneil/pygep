@@ -172,6 +172,14 @@ class Chromosome(object):
         self.__id = type(self).__next_id
         type(self).__next_id += 1
 
+    
+    def __cmp__(self, other):
+        '''@return: cmp value of two chromosomes by fitness'''
+        if self is other:
+            return 0
+        
+        return cmp(self.fitness, other.fitness)
+
 
     def __len__(self):
         '''@return: total number of alleles in the chromosome'''
