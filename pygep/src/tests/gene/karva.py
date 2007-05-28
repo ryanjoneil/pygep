@@ -32,6 +32,10 @@ class KarvaTest(unittest.TestCase):
     
     def testRepresentation(self):
         self.assertEqual('+-a1a', repr(self.gene))
+        
+    
+    def testTerminalLocations(self):
+        self.assertEqual(self.gene._terminals, [('a', [2,4])])
 
 
 if __name__ == '__main__':

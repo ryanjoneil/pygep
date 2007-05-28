@@ -22,6 +22,8 @@ evaluation more efficiently.
 '''
 
 from copy import copy
+from itertools import groupby
+from operator import itemgetter
 from pygep.util import memoize
 
 
@@ -42,6 +44,8 @@ class KarvaGene(object):
         self.alleles = alleles
         self.head    = head
         self.coding  = 0
+        
+        self._evaluation = self._terminals = []
         self._find_coding()
 
     
@@ -55,21 +59,11 @@ class KarvaGene(object):
         @param obj: some object instance
         @return:    result of evaluating the gene
         '''
-        # Prepare our evaluation list -> results of expression evaluation
-        def _value(allele):
-            '''Returns the evaluation of a given allele to obj'''
-            if callable(allele):
-                return None
-            elif not isinstance(allele, str):
-                # could be a number
-                return allele
-            else:
-                return getattr(obj, allele)
-            
-        # The evaluation list only uses the coding region
-        evaluation = self.alleles[:self.coding+1]
-        for i, allele in enumerate(evaluation):
-            evaluation[i] = _value(allele)
+        # Prepare our evaluation list -> results of expression evalation
+        for terminal, indexes in self._terminals:
+            temp = getattr(obj, terminal)
+            for i in indexes:
+                self._evaluation[i] = temp
         
         # Evaluate the gene against obj in reverse
         index = self.coding + 1
@@ -78,14 +72,14 @@ class KarvaGene(object):
 
             if callable(allele):
                 num  = allele.func_code.co_argcount
-                args = evaluation[index-num:index]
+                args = self._evaluation[index-num:index]
 
                 # Replace the operation in eval with its return val
-                evaluation[i] = allele(*args)
+                self._evaluation[i] = allele(*args)
                 index -= num
 
         # Expression results will always be stored in the first index
-        return evaluation[0]
+        return self._evaluation[0]
 
 
     def __repr__(self):
@@ -128,7 +122,11 @@ class KarvaGene(object):
     
     
     def _find_coding(self):
-        '''Assigns the last coding index to self.coding'''
+        '''
+        Assigns the last coding index to self.coding and creates an 
+        evaluation list from the coding region as self._evaluation
+        and pairs of foreign attributes with locations at self._terminals.
+        '''
         # How to find the length of a single coding region:
         #
         # Start at the first gene and determine how many args it
@@ -147,7 +145,35 @@ class KarvaGene(object):
             args = next_args
 
         self.coding = index - 1
-    
+        
+        
+        # The evaluation list only uses the coding region.  Since constants
+        # done change from one run to the next, only expression results and
+        # attribute values do, this is perfectly safe.
+        self._evaluation = self.alleles[:self.coding+1]
+        
+        # TODO: consider converting NCs to floats in some future release
+        #for i, allele in enumerate(self._evaluation): # ints -> floats
+        #    if isinstance(allele, int):
+        #        self._evaluation[i] = float(allele)
+        
+        # Pull out the attribute terminals by terminal name.  This constructs
+        # a list of pairs containing attribute name and indexes:
+        #
+        #     [('a', [3,5]), ('b', [4]), ...]
+        first = itemgetter(1)
+        
+        # Generates pairs of (index, terminal) for attribute terminals
+        terminals = (i for i in enumerate(self._evaluation) 
+                     if isinstance(i[1], str))
+        
+        # Groups those termianls into (terminal, [indexes])
+        self._terminals = [
+            (key, [i[0] for i in value]) for key, value in groupby(
+                sorted(terminals, key=first), key=first
+            )
+        ]
+        
     
     def derive(self, changes):
         '''

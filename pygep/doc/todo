@@ -1,24 +1,34 @@
 Where is PyGEP going?
 Introduction
 
-This is the development road map going toward a 1.0 release. I'll add tickets
-to these as they become pertinent.
+This is the development road map going toward a 1.0 release.
 
 
 Current Status
 --------------
-v0.2 beta testing
+v0.2 beta testing & v0.3 development
 
 
 Future Releases
 ---------------
 v0.3
+    * Issue #3: minor optimizations to gene evaluation 
     * Issue #8: random numerical constants (RNCs) via the special '?' terminal
-    * Improvements to the function and linker libraries. 
+    * Issue #13: Built-in function library hierarchy
+      - Reorganization of pygep.functions hierarchy to accommodate more:
+        - Add min_op, max_op, ln_op, log2_op, log10_op, etc.
+      - For each function package, provide an ALL (or something) tuple
+      - Standardization of names (all like function_op or function_linker)
+      - Determine whether or not to use function closure by default
+    * Issue #14: Raise SemanticError on missing attributes in gene evaluations
+      - SemanticError should only catch AttributeErrors before actual eval,
+        everything else is raised as before.
+    * Issue #15: Should GEP NCs convert to floating point by default
 
 v0.4
     * Issue #10: conversion of GEP chromosomes to Python code
     * Issue #11: provide .deb packages
+    * Issue #16: make PyGEP thread-safe
 
 v0.5:
-    * ADFs via hemeotic genes
+    * Issue #17: ADFs via homeotic genes
