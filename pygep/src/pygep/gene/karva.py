@@ -59,11 +59,7 @@ class KarvaGene(object):
         @param obj: some object instance
         @return:    result of evaluating the gene
         '''
-        # Prepare our evaluation list -> results of expression evalation
-        for terminal, indexes in self._terminals:
-            temp = getattr(obj, terminal)
-            for i in indexes:
-                self._evaluation[i] = temp
+        self._prepare_eval_attrs(obj)
         
         # Evaluate the gene against obj in reverse
         index = self.coding + 1
@@ -173,8 +169,17 @@ class KarvaGene(object):
                 sorted(terminals, key=first), key=first
             )
         ]
-        
     
+    
+    def _prepare_eval_attrs(self, obj):
+        '''Pulls attributes from obj into the evaluation list'''
+        # Prepare our evaluation list -> results of expression evalation
+        for terminal, indexes in self._terminals:
+            temp = getattr(obj, terminal)
+            for i in indexes:
+                self._evaluation[i] = temp
+    
+        
     def derive(self, changes):
         '''
         Derives a gene from self.  If the coding region remains unchanged,

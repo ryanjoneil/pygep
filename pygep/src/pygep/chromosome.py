@@ -233,7 +233,7 @@ class Chromosome(object):
         @param obj: an object instance with terminal attributes set
         @return:    result of evaluating the chromosome
         '''
-        return self.linker(*(g(obj) for g in self.genes))
+        return self.linker(*[g(obj) for g in self.genes])
 
 
     def _fitness(self):
