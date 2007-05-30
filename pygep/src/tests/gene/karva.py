@@ -16,7 +16,7 @@ class KarvaTest(unittest.TestCase):
     def testEvaluation(self):
         f = Foo()
         self.assertEqual(1, self.gene(f))
-        self.assertTrue((f,) in getattr(self.gene, self.gene.__call__.memo))
+        self.assertTrue(f in getattr(self.gene, self.gene.__call__.memo))
         
 
     def testCodingLocation(self):
