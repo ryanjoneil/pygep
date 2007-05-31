@@ -75,7 +75,7 @@ class TumorEvaluator(Chromosome):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print 'Usage: %s cander1.dt' % sys.argv[0]
+        print 'Usage: %s cancer1.dt' % sys.argv[0]
         sys.exit()
 
     # Read in the training and testing data

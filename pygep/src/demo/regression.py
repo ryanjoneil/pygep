@@ -32,25 +32,23 @@ class DataPoint(object):
 class Regression(Chromosome):
     REWARD = 1000.0
     functions = multiply, add, subtract, divide
-    terminals = 'x', 1, 2
+    terminals = 'x',
     
     def _fitness(self):
-        total = 0
+        # Fitness function: relative mean squared error
+        error = 0.0
         for x in DataPoint.SAMPLE:
             try:
                 guess = self(x) # Evaluation of this chromosome
-                diff = min(1.0, abs((x.y - guess) / x.y))
-                total += self.REWARD * (1 - diff)
-                                
-            except ZeroDivisionError: # semantic error
-                pass
-
-        return total
+                error += ((guess - x.y) / x.y) ** 2
+                
+            except ZeroDivisionError: # unviable organism
+                return 0
+        
+        return self.REWARD * (1 / (1 + (error / DataPoint.SAMPLE_SIZE)))
     
     def _solved(self):
-        return self.fitness == self.max_fitness
-
-    max_fitness = property(lambda self: self.REWARD * DataPoint.SAMPLE_SIZE)
+        return self.fitness >= self.REWARD
 
 
 if __name__ == '__main__':

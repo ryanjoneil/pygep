@@ -20,15 +20,18 @@ v0.3
       - For each function package, provide an ALL (or something) tuple
       - Standardization of names (all like function_op or function_linker)
       - Determine whether or not to use function closure by default
-    * Issue #14: Raise SemanticError on missing attributes in gene evaluations
-      - SemanticError should only catch AttributeErrors before actual eval,
-        everything else is raised as before.
     * Issue #15: Should GEP NCs convert to floating point by default
+	* Issue #19: review interpretation of non-mutation rates
 
 v0.4
-    * Issue #10: conversion of GEP chromosomes to Python code
-    * Issue #11: provide .deb packages
-    * Issue #16: make PyGEP thread-safe
+    * Issue #17: ADFs via homeotic genes
+	* Issue #18: provide out-of-the-box fitness functions
 
 v0.5:
-    * Issue #17: ADFs via homeotic genes
+    * Issue #10: conversion of GEP chromosomes to Python code
+    * Issue #11: provide .deb packages
+
+...
+
+v1.0:
+    * Issue #16: make PyGEP thread-safe
