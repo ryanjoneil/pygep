@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
+ 
 '''
 Provides basic arithmetic non-terminals for use in Chromosomes.
 Any semantic exceptions (ZeroDivisionError, etc.) are passed up
@@ -22,59 +22,16 @@ the call chain to the user.  Typically one should catch any
 exceptions when calling chromosome.evaluate() and set the fitness
 of nonviable organisms to 0.
 
-Common mathematical non-terminal functions and symbols:
-    - (*) multiply
-    - (+) add
-    - (-) subtract
-    - (/) divide
-    - (^) power
-    - (Q) root
+Provides pre-packaged GEP mathematics functions:
+    - pygep.functions.math.arithmetic
+    - pygep.functions.math.constants
+    - pygep.functions.math.power
+    - pygep.functions.math.rounding
+    - pygep.functions.math.trigonometry
 '''
 
-from pygep.chromosome import symbol
-import math
-
-
-__all__ = 'add', 'subtract', 'multiply', 'divide', 'power', 'root'
-
-
-@symbol('*')
-def multiply(i, j):
-    '''@return: i * j'''
-    return i * j
-
-
-@symbol('+')
-def add(i, j):
-    '''@return: i + j'''
-    return i + j
-
-
-@symbol('-')
-def subtract(i, j):
-    '''@return: i - j'''
-    return i - j
-
-
-@symbol('/')
-def divide(i, j):
-    '''
-    Returns i / j
-    @raise ZeroDivisionError: division by 0 
-    '''
-    return i / j
-
-
-@symbol('^')
-def power(i, j):
-    '''@return: i ** j'''
-    return i ** j
-
-
-@symbol('Q')
-def root(i):
-    '''
-    @return: square root of i
-    @raise ValueError: invalid square root input
-    '''
-    return math.sqrt(i)
+from pygep.functions.math.arithmetic import *
+from pygep.functions.math.constants import *
+from pygep.functions.math.power import *
+from pygep.functions.math.rounding import *
+from pygep.functions.math.trigonometry import *

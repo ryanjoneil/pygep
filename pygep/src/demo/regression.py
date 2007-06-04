@@ -1,5 +1,7 @@
 #!/usr/bin/env python2.5
-from pygep.functions.arithmetic import *
+from pygep.functions.math.arithmetic import ARITHMETIC_ALL
+from pygep.functions.math.power import POWER_ALL
+from pygep.functions.math.constants import CONSTANTS_ALL
 from pygep.functions.linkers import sum_linker
 from pygep import *
 import random
@@ -31,7 +33,7 @@ class DataPoint(object):
 # The chromsomes: fitness is accuracy over the sample
 class Regression(Chromosome):
     REWARD = 1000.0
-    functions = multiply, add, subtract, divide
+    functions = ARITHMETIC_ALL + POWER_ALL + CONSTANTS_ALL
     terminals = 'x',
     
     def _fitness(self):
@@ -41,8 +43,11 @@ class Regression(Chromosome):
             try:
                 guess = self(x) # Evaluation of this chromosome
                 error += ((guess - x.y) / x.y) ** 2
-                
-            except ZeroDivisionError: # unviable organism
+            
+            except AttributeError: # programmer error
+                raise
+            
+            except: # unviable organism
                 return 0
         
         return self.REWARD * (1 / (1 + (error / DataPoint.SAMPLE_SIZE)))
@@ -58,7 +63,7 @@ if __name__ == '__main__':
     p = Population(Regression, 30, 8, 4, sum_linker)
     print p
 
-    for _ in xrange(100):
+    for _ in xrange(1000):
         if p.best.solved:
             break
         p.cycle()
