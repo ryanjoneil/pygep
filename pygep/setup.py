@@ -4,7 +4,7 @@ import sys
 
 # TODO: once issue 7 goes away, remove this code
 if sys.version_info[:2] < (2, 5):
-    raise Exception('PyGEP requires Python 2.5')
+    raise SystemExit('PyGEP requires Python 2.5')
 
 
 setup(
