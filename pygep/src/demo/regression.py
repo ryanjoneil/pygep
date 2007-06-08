@@ -1,9 +1,7 @@
 #!/usr/bin/env python2.5
-from pygep.functions.math.arithmetic import ARITHMETIC_ALL
-from pygep.functions.math.power import POWER_ALL
-from pygep.functions.math.constants import CONSTANTS_ALL
-from pygep.functions.linkers import sum_linker
 from pygep import *
+from pygep.functions.linkers import sum_linker
+from pygep.functions.math.arithmetic import add_op, subtract_op, multiply_op, divide_op
 import random
 
 
@@ -33,7 +31,7 @@ class DataPoint(object):
 # The chromsomes: fitness is accuracy over the sample
 class Regression(Chromosome):
     REWARD = 1000.0
-    functions = ARITHMETIC_ALL + POWER_ALL + CONSTANTS_ALL
+    functions = add_op, subtract_op, multiply_op, divide_op
     terminals = 'x',
     
     def _fitness(self):
@@ -60,7 +58,7 @@ if __name__ == '__main__':
     DataPoint.populate()
 
     # Search for a solution
-    p = Population(Regression, 30, 8, 4, sum_linker)
+    p = Population(Regression, 30, 6, 4, sum_linker)
     print p
 
     for _ in xrange(1000):

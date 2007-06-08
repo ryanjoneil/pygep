@@ -20,52 +20,28 @@ Provides basic comparison non-terminals.  If each is true, it returns
 the first value given.  If false, it returns the second.
 
 Common comparison non-terminal functions:
-    - (=) equal
-    - (U) unequal
-    - (<) less
-    - (>) greater
-    - (L) less_or_equal
-    - (G) greater_or_equal
+    - (=) equal_op:            i if i == j else j
+    - (U) unequal_op:          i if i != j else j
+    - (<) less_op:             i if i < j else j
+    - (>) greater_op:          i if i > j else j
+    - (L) less_or_equal_op:    i if i <= j else j
+    - (G) greater_or_equal_op: i if i >= j else j
 '''
 
 from pygep.chromosome import symbol
 
 
-__all__ = 'equal', 'unequal', 'less', 'greater', 'less_or_equal', \
-          'greater_or_equal'
+__all__ = 'COMPARISON_ALL', 'COMPARISON_ARITY_2'
 
 
-@symbol('=')
-def equal(i, j):
-    '''@return: i if i == j else j'''
-    return i if i == j else j
+equal_op            = symbol('=')(lambda i, j: i if i == j else j)
+unequal_op          = symbol('U')(lambda i, j: i if i != j else j)
+less_op             = symbol('<')(lambda i, j: i if i < j  else j)
+greater_op          = symbol('>')(lambda i, j: i if i > j  else j)
+less_or_equal_op    = symbol('L')(lambda i, j: i if i <= j else j)
+greater_or_equal_op = symbol('G')(lambda i, j: i if i >= j else j)
 
 
-@symbol('U')
-def unequal(i, j):
-    '''@return: i if i != j else j'''
-    return i if i != j else j
-
-
-@symbol('<')
-def less(i, j):
-    '''@return: i if i < j else j'''
-    return i if i < j else j
-
-
-@symbol('>')
-def greater(i, j):
-    '''@return: i if i > j else j'''
-    return i if i > j else j
-
-
-@symbol('L')
-def less_or_equal(i, j):
-    '''@return: i if i <= j else j'''
-    return i if i <= j else j
-
-
-@symbol('G')
-def greater_or_equal(i, j):
-    '''@return: i if i >= j else j'''
-    return i if i >= j else j
+COMPARISON_ARITY_2 = equal_op, unequal_op, less_op, greater_op, \
+                     less_or_equal_op, greater_or_equal_op
+COMPARISON_ALL = COMPARISON_ARITY_2

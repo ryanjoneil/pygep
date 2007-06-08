@@ -24,14 +24,28 @@ of nonviable organisms to 0.
 
 Provides pre-packaged GEP mathematics functions:
     - pygep.functions.math.arithmetic
+    - pygep.functions.math.comparison
     - pygep.functions.math.constants
+    - pygep.functions.maty.hyperbolic
     - pygep.functions.math.power
     - pygep.functions.math.rounding
     - pygep.functions.math.trigonometry
 '''
 
 from pygep.functions.math.arithmetic import *
+from pygep.functions.math.comparison import *
 from pygep.functions.math.constants import *
+from pygep.functions.math.hyperbolic import *
 from pygep.functions.math.power import *
 from pygep.functions.math.rounding import *
 from pygep.functions.math.trigonometry import *
+
+
+__all__ = 'MATH_ALL', 'MATH_ARITY_0', 'MATH_ARITY_1', 'MATH_ARITY_2'
+
+
+MATH_ARITY_0 = CONSTANTS_ARITY_0
+MATH_ARITY_1 = HYPERBOLIC_ARITY_1 + POWER_ARITY_1 + ROUNDING_ARITY_1 + \
+               TRIGONOMETRY_ARITY_1
+MATH_ARITY_2 = ARITHMETIC_ARITY_2 + COMPARISON_ARITY_2 + POWER_ARITY_2
+MATH_ALL = MATH_ARITY_0 + MATH_ARITY_1 + MATH_ARITY_2

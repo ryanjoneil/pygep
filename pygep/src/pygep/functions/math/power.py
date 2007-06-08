@@ -17,10 +17,10 @@
 
 '''
 Common exponential and logarithmic non-terminal functions and symbols:
-    - (ln   ) ln_op:        math.log(x)
-    - (log10) log10_op:     math.log10(x)
+    - (LN   ) ln_op:        math.log(x)
+    - (LOG10) log10_op:     math.log10(x)
     - (^    ) power_op:     x ** y
-    - (e^   ) exp_op:       e ** x
+    - (E^   ) exp_op:       e ** x
     - (10^  ) pow10_op:     10 ** x
     - (^2   ) square_op:    x ** 2
     - (^3   ) cube_op:      x ** 3
@@ -36,78 +36,16 @@ import math
 __all__ = 'POWER_ALL', 'POWER_ARITY_1', 'POWER_ARITY_2'
 
 
-@symbol('ln')
-def ln_op(i):
-    '''
-    @return: ln(i)
-    @raise OverflowError: i == 0
-    @raise ValueError: i < 0
-    '''
-    return math.log(i)
-
-
-@symbol('log10')
-def log10_op(i):
-    '''
-    @return: log10(i)
-    @raise OverflowError: i == 0
-    @raise ValueError: i < 0
-    '''
-    return math.log10(i)
-
-
-@symbol('^')
-def power_op(i, j):
-    '''@return: i ** j'''
-    return i ** j
-
-
-@symbol('e^')
-def exp_op(i):
-    '''@return: e^i'''
-    return math.exp(i)
-
-
-@symbol('10^')
-def pow10_op(i):
-    '''@return: 10^i'''
-    return 10 ** i
-
-
-@symbol('^2')
-def square_op(i):
-    '''@return: i ** 2'''
-    return i ** 2
-
-
-@symbol('^3')
-def cube_op(i):
-    '''@return i ** 3'''
-    return i ** 3
-
-
-@symbol('Q')
-def root_op(i):
-    '''
-    @return: square root of i
-    @raise ValueError: invalid square root input
-    '''
-    return math.sqrt(i)
-
-
-@symbol('Q3')
-def cube_root_op(i):
-    '''@return: cubed root of i'''
-    return i ** (1./3)
-
-
-@symbol('^-1')
-def inverse_op(i):
-    '''
-    @return: 1. / i
-    @raise ZeroDivisionError: i == 0
-    '''
-    return 1. / i
+ln_op        = symbol('LN'   )(lambda i: math.log(i))
+log10_op     = symbol('LOG10')(lambda i: math.log10(i))
+power_op     = symbol('^'    )(lambda i, j: i ** j)
+exp_op       = symbol('E^'   )(lambda i: math.exp(i))
+pow10_op     = symbol('10^'  )(lambda i: 10 ** i)
+square_op    = symbol('^2'   )(lambda i: i ** 2)
+cube_op      = symbol('^3'   )(lambda i: i ** 3)
+root_op      = symbol('Q'    )(lambda i: math.sqrt(i))
+cube_root_op = symbol('Q3'   )(lambda i: i ** (1./3))
+inverse_op   = symbol('^-1'  )(lambda i: 1. / i)
 
 
 POWER_ARITY_1 = ln_op, log10_op, root_op, exp_op, pow10_op, square_op, \

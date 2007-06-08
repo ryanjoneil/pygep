@@ -17,15 +17,19 @@
 
 '''
 Common trigonometric functions:
-    - (sin) sine_op:      math.sin(x)
-    - (cos) cosine_op:    math.cos(x)
-    - (tan) tangent_op:   math.tan(x)
-    - (csc) cosecant_op:  1 / math.sin(x)
-    - (sec) secant_op:    1 / math.cos(x)
-    - (cot) cotangent_op: 1 / math.tan(x)
+    - (SIN ) sine_op:         math.sin(x)
+    - (COS ) cosine_op:       math.cos(x)
+    - (TAN ) tangent_op:      math.tan(x)
+    - (CSC ) cosecant_op:     1 / math.sin(x)
+    - (SEC ) secant_op:       1 / math.cos(x)
+    - (COT ) cotangent_op:    1 / math.tan(x)
+    - (ASIN) arcsine_op:      math.asin(x)
+    - (ACOS) arccosine_op:    math.acos(x)
+    - (ATAN) arctangent_op:   math.atan(x)
+    - (ACSC) arccosecant_op:  1 / math.asin(x)
+    - (ASEC) arcsecant_op:    1 / math.acos(x)
+    - (ACOT) arccotangent_op: 1 / math.atan(x)
 '''
-
-# TODO: inverse functions
 
 from pygep.chromosome import symbol
 import math
@@ -34,42 +38,22 @@ import math
 __all__ = 'TRIGONOMETRY_ALL', 'TRIGONOMETRY_ARITY_1'
 
 
-@symbol('sin')
-def sine_op(i):
-    '''@return: math.sin(i)'''
-    return math.sin(i)
-
-
-@symbol('cos')
-def cosine_op(i):
-    '''@return: math.cos(i)'''
-    return math.cos(i)
-
-
-@symbol('tan')
-def tangent_op(i):
-    '''@return: math.tan(i)'''
-    return math.tan(i)
-
-
-@symbol('csc')
-def cosecant_op(i):
-    '''@return: 1. / math.sin(i)'''
-    return 1. / math.sin(i)
-
-
-@symbol('sec')
-def secant_op(i):
-    '''@return: 1. / math.cos(i)'''
-    return 1. / math.cos(i)
-
-
-@symbol('cot')
-def cotangent_op(i):
-    '''@return: 1. / math.tan(i)'''
-    return 1. / math.tan(i)
+sine_op         = symbol('SIN' )(lambda i: math.sin(i))
+cosine_op       = symbol('COS' )(lambda i: math.cos(i))
+tangent_op      = symbol('TAN' )(lambda i: math.tan(i))
+cosecant_op     = symbol('CSC' )(lambda i: 1. / math.sin(i))
+secant_op       = symbol('SEC' )(lambda i: 1. / math.cos(i))
+cotangent_op    = symbol('COT' )(lambda i: 1. / math.tan(i))
+arcsine_op      = symbol('ASIN')(lambda i: math.asin(i))
+arccosine_op    = symbol('ACOS')(lambda i: math.acos(i))
+arctangent_op   = symbol('ATAN')(lambda i: math.atan(i))
+arccosecant_op  = symbol('ACSC')(lambda i: 1. / math.asin(i))
+arcsecant_op    = symbol('ASEC')(lambda i: 1. / math.acos(i))
+arccotangent_op = symbol('ACOT')(lambda i: 1. / math.atan(i))
 
 
 TRIGONOMETRY_ARITY_1 = sine_op, cosine_op, tangent_op, cosecant_op, \
-                       secant_op, cotangent_op
+                       secant_op, cotangent_op, arcsine_op, arccosine_op, \
+                       arctangent_op, arccosecant_op, arcsecant_op, \
+                       arccotangent_op
 TRIGONOMETRY_ALL = TRIGONOMETRY_ARITY_1

@@ -17,9 +17,10 @@
 
 '''
 Common rounding functions:
-    - (floor) floor_op: math.floor(x)
-    - (ceil ) ceil_op:  math.ceil(x)
-    - (abs  ) abs_op:   abs(x)
+    - (FLOOR) floor_op: math.floor(x)
+    - (CEIL ) ceil_op:  math.ceil(x)
+    - (ROUND) round_op: round(x)
+    - (ABS  ) abs_op:   abs(x)
 '''
 
 from pygep.chromosome import symbol
@@ -29,23 +30,11 @@ import math
 __all__ = 'ROUNDING_ALL', 'ROUNDING_ARITY_1'
 
 
-@symbol('floor')
-def floor_op(i):
-    '''@return: math.floor(i)'''
-    return math.floor(i)
+floor_op = symbol('FLOOR')(lambda i: math.floor(i))
+ceil_op  = symbol('CEIL' )(lambda i: math.ceil(i))
+round_op = symbol('ROUND')(lambda i: round(i))
+abs_op   = symbol('ABS'  )(lambda i: abs(i))
 
 
-@symbol('ceil')
-def ceil_op(i):
-    '''@return: math.ceil(i)'''
-    return math.ceil(i)
-
-
-@symbol('abs')
-def abs_op(i):
-    '''@return: abs(i)'''
-    return abs(i)
-
-
-ROUNDING_ARITY_1 = floor_op, ceil_op, abs_op
+ROUNDING_ARITY_1 = floor_op, ceil_op, round_op, abs_op
 ROUNDING_ALL = ROUNDING_ARITY_1

@@ -31,40 +31,11 @@ __all__ = 'ARITHMETIC_ALL', 'ARITHMETIC_ARITY_2'
 
 
 # Functions of Arity 2
-@symbol('+')
-def add_op(i, j):
-    '''@return: i + j'''
-    return i + j
-
-
-@symbol('-')
-def subtract_op(i, j):
-    '''@return: i - j'''
-    return i - j
-
-
-@symbol('*')
-def multiply_op(i, j):
-    '''@return: i * j'''
-    return i * j
-
-
-@symbol('/')
-def divide_op(i, j):
-    '''
-    @return: float(i) / j
-    @raise ZeroDivisionError: division by 0 
-    '''
-    return float(i) / j
-
-
-@symbol('%')
-def modulus_op(i, j):
-    '''
-    @return: i % j
-    @raise ZeroDivisionErro: division by 0
-    '''
-    return i % j
+add_op      = symbol('+')(lambda i, j: i + j)
+subtract_op = symbol('-')(lambda i, j: i - j)
+multiply_op = symbol('*')(lambda i, j: i * j)
+divide_op   = symbol('/')(lambda i, j: float(i) / j)
+modulus_op  = symbol('%')(lambda i, j: i % j)
 
 
 ARITHMETIC_ARITY_2 = add_op, subtract_op, multiply_op, divide_op, modulus_op

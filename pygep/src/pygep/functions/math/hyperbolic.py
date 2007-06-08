@@ -16,25 +16,30 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 '''
-Common constant functions:
-    - (0) zero_op: 0
-    - (1) one_op:  1
-    - (P) pi_op:   math.pi
-    - (E) e_op:    math.e
+Common hyperbolic functions:
+    - (SINH) sineh_op:      math.sinh(x)
+    - (COSH) cosineh_op:    math.cosh(x)
+    - (TANH) tangenth_op:   math.tanh(x)
+    - (CSCH) cosecanth_op:  1 / math.sinh(x)
+    - (SECH) secanth_op:    1 / math.cosh(x)
+    - (COTH) cotangenth_op: 1 / math.tanh(x)
 '''
 
 from pygep.chromosome import symbol
 import math
 
 
-__all__ = 'CONSTANTS_ALL', 'CONSTANTS_ARITY_0'
+__all__ = 'HYPERBOLIC_ALL', 'HYPERBOLIC_ARITY_1'
 
 
-zero_op = symbol('0')(lambda: 0)
-one_op  = symbol('1')(lambda: 1)
-pi_op   = symbol('P')(lambda: math.pi)
-e_op    = symbol('E')(lambda: math.e)
+sineh_op      = symbol('SINH')(lambda i: math.sinh(i))
+cosineh_op    = symbol('COSH')(lambda i: math.cosh(i))
+tangenth_op   = symbol('TANH')(lambda i: math.tanh(i))
+cosecanth_op  = symbol('CSCH')(lambda i: 1. / math.sinh(i))
+secanth_op    = symbol('SECH')(lambda i: 1. / math.cosh(i))
+cotangenth_op = symbol('COTH')(lambda i: 1. / math.tanh(i))
 
 
-CONSTANTS_ARITY_0 = zero_op, one_op, pi_op, e_op
-CONSTANTS_ALL = CONSTANTS_ARITY_0
+HYPERBOLIC_ARITY_1 = sineh_op, cosineh_op, tangenth_op, cosecanth_op, \
+                     secanth_op, cotangenth_op
+HYPERBOLIC_ALL = HYPERBOLIC_ARITY_1
