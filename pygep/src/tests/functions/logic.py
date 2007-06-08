@@ -1,4 +1,4 @@
-from pygep.functions.logic import *
+from pygep.functions.logic import and_op, or_op, not_op, if_op
 import unittest
 
 

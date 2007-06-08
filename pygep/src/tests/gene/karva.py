@@ -1,4 +1,4 @@
-from pygep.functions.arithmetic import *
+from pygep.functions.math.arithmetic import add_op, subtract_op
 from pygep.gene import KarvaGene
 import unittest
 
@@ -10,7 +10,7 @@ class Foo(object):
 class KarvaTest(unittest.TestCase):
     '''Tests basic functionality of Karva genes'''
     def setUp(self):
-        self.gene = KarvaGene([add, subtract, 'a', 1, 'a'], 2)
+        self.gene = KarvaGene([add_op, subtract_op, 'a', 1, 'a'], 2)
     
     
     def testEvaluation(self):
@@ -25,8 +25,8 @@ class KarvaTest(unittest.TestCase):
     
     
     def testDerivation(self):
-        g = self.gene.derive([(0, ['a']), (3, [add, add])])
-        self.assertEqual(['a', subtract, 'a', add, add], g.alleles)
+        g = self.gene.derive([(0, ['a']), (3, [add_op, add_op])])
+        self.assertEqual(['a', subtract_op, 'a', add_op, add_op], g.alleles)
         self.assertEqual(self.gene, self.gene.derive([(2, ['a'])]))
     
     

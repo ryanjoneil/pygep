@@ -1,5 +1,5 @@
 from pygep.chromosome import Chromosome, symbol
-from pygep.functions.arithmetic import *
+from pygep.functions.math.arithmetic import ARITHMETIC_ALL
 
 
 '''Base types for use in other tests'''
@@ -7,5 +7,5 @@ from pygep.functions.arithmetic import *
 
 class Computation(Chromosome):
     ARITY = 2
-    functions = multiply, add, subtract, divide
+    functions = ARITHMETIC_ALL
     terminals = 'a', 1, 2
