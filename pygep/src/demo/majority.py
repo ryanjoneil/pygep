@@ -1,6 +1,6 @@
 from pygep import *
 from pygep.functions.linkers import or_linker
-from pygep.functions.logic import *
+from pygep.functions.logic import LOGIC_ALL
 
 # Demo for the boolean majority function
 
@@ -22,7 +22,7 @@ class Majority(object):
 
 
 class BooleanFunction(Chromosome):
-    functions = and_op, or_op, not_op #, if_op
+    functions = LOGIC_ALL
     terminals = 'a', 'b', 'c'
     
     def _fitness(self):

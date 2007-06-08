@@ -16,9 +16,8 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  
 '''
-Provides pre-packaged GEP functions:
-    - pygep.functions.arithmetic
-    - pygep.functions.comparison
+Provides pre-packaged GEP function libraries:
+    - pygep.functions.math
     - pygep.functions.logic
     
 And linkers for multigenic chromosomes:

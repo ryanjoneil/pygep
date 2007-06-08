@@ -16,42 +16,30 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 '''
-Provides basic logical operators: and, or, not, if.  The former 
-three will return boolean values, whereas if returns one of the
-values passed in, so be careful mixing these with other operators.
+Provides basic logical operators: and, or, not, if.  These are same to use
+with the mathematics operators as they return either 1, 0 or the types 
+passed in to them.
 
 Common logic non-terminal functions:
-    - (&) and_op
-    - (|) or_op
-    - (!) not_op
-    - (I) if_op
+    - (&) and_op: i if i and j else 0
+    - (|) or_op:  i or j or 0
+    - (!) not_op: 0 if i else 1
+    - (I) if_op:  j if i else k
 '''
 
 from pygep.chromosome import symbol
 
 
-__all__ = 'and_op', 'or_op', 'not_op', 'if_op'
+__all__ = 'LOGIC_ALL', 'LOGIC_ARITY_1', 'LOGIC_ARITY_2', 'LOGIC_ARITY_3'
 
 
-@symbol('&')
-def and_op(i, j):
-    '''@return: i and j'''
-    return i and j
+and_op = symbol('&')(lambda i, j: i if i and j else 0)
+or_op  = symbol('|')(lambda i, j: i or j or 0)
+not_op = symbol('!')(lambda i: 0 if i else 1)
+if_op  = symbol('I')(lambda i, j, k: j if i else k)
 
 
-@symbol('|')
-def or_op(i, j):
-    '''@return: i or j'''
-    return i or j
-
-
-@symbol('!')
-def not_op(i):
-    '''@return: not i'''
-    return not i
-
-
-@symbol('I')
-def if_op(i, j, k):
-    '''@return: j if i else k'''
-    return j if i else k
+LOGIC_ARITY_1 = not_op,
+LOGIC_ARITY_2 = and_op, or_op
+LOGIC_ARITY_3 = if_op,
+LOGIC_ALL = LOGIC_ARITY_1 + LOGIC_ARITY_2 + LOGIC_ARITY_3
