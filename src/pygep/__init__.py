@@ -34,5 +34,5 @@ This software is released under the GPL 2.0.
 from pygep.chromosome import Chromosome
 from pygep.population import Population
 
-__version__ = '0.3.1'
+__version__ = '0.3.0'
 __all__ = 'Chromosome', 'Population'
