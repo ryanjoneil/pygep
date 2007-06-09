@@ -1,6 +1,6 @@
 from pygep import *
 from pygep.functions.linkers import or_linker
-from pygep.functions.logic import LOGIC_ALL
+from pygep.functions.logical import LOGIC_ALL
 
 # Demo for the boolean majority function
 

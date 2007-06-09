@@ -1,7 +1,8 @@
 #!/usr/bin/env python2.5
 from pygep import *
 from pygep.functions.linkers import sum_linker
-from pygep.functions.math.arithmetic import add_op, subtract_op, multiply_op, divide_op
+from pygep.functions.mathematical.arithmetic import (add_op, subtract_op, 
+    multiply_op, divide_op)
 import random
 
 

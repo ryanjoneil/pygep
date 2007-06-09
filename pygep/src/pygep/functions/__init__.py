@@ -17,8 +17,8 @@
  
 '''
 Provides pre-packaged GEP function libraries:
-    - pygep.functions.math
-    - pygep.functions.logic
+    - pygep.functions.mathematical
+    - pygep.functions.logical
     
 And linkers for multigenic chromosomes:
     -pygep.functions.linkers

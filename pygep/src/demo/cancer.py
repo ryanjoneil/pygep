@@ -1,7 +1,7 @@
 #!/usr/bin/env python2.5
 from pygep import *
 from pygep.functions.linkers import sum_linker
-from pygep.functions.math import MATH_ALL
+from pygep.functions.mathematical import MATH_ALL
 import string, sys
 
 

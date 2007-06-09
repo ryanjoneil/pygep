@@ -23,22 +23,22 @@ exceptions when calling chromosome.evaluate() and set the fitness
 of nonviable organisms to 0.
 
 Provides pre-packaged GEP mathematics functions:
-    - pygep.functions.math.arithmetic
-    - pygep.functions.math.comparison
-    - pygep.functions.math.constants
-    - pygep.functions.maty.hyperbolic
-    - pygep.functions.math.power
-    - pygep.functions.math.rounding
-    - pygep.functions.math.trigonometry
+    - pygep.functions.mathematical.arithmetic
+    - pygep.functions.mathematical.comparison
+    - pygep.functions.mathematical.constants
+    - pygep.functions.mathematical.hyperbolic
+    - pygep.functions.mathematical.power
+    - pygep.functions.mathematical.rounding
+    - pygep.functions.mathematical.trigonometry
 '''
 
-from pygep.functions.math.arithmetic import *
-from pygep.functions.math.comparison import *
-from pygep.functions.math.constants import *
-from pygep.functions.math.hyperbolic import *
-from pygep.functions.math.power import *
-from pygep.functions.math.rounding import *
-from pygep.functions.math.trigonometry import *
+from pygep.functions.mathematical.arithmetic import *
+from pygep.functions.mathematical.comparison import *
+from pygep.functions.mathematical.constants import *
+from pygep.functions.mathematical.hyperbolic import *
+from pygep.functions.mathematical.power import *
+from pygep.functions.mathematical.rounding import *
+from pygep.functions.mathematical.trigonometry import *
 
 
 __all__ = 'MATH_ALL', 'MATH_ARITY_0', 'MATH_ARITY_1', 'MATH_ARITY_2'

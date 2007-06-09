@@ -1,4 +1,4 @@
-from pygep.functions.math.arithmetic import add_op, subtract_op
+from pygep.functions.mathematical.arithmetic import add_op, subtract_op
 from pygep.gene import KarvaGene
 import unittest
 
