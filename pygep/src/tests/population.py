@@ -78,6 +78,17 @@ class PopulationTest(unittest.TestCase):
         p = repr(self.pop)
         for c in self.pop:
             self.assertTrue(repr(c) in p)
+            
+    
+    def testCrossoverPairs(self):
+        seen = set()
+        for x, y in self.pop._pairs(1.1):
+            seen.add(x)
+            seen.add(y)
+            
+        # The first org and one other should be left out
+        self.assertTrue(0 not in seen)
+        self.assertEqual(self.pop.size-2, len(seen))
 
 
 if __name__ == '__main__':
