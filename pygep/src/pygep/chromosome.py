@@ -377,10 +377,10 @@ class Chromosome(object):
             return self
         
         genes = list(self.genes)
-        source, target  = random.sample(xrange(len(genes)), 2)
-
+        which = random.randint(1, len(genes)-1)
+        
         # Switch these genes
-        genes[source], genes[target] = genes[target], genes[source]
+        genes[0], genes[which] = genes[which], genes[0]
         return self._child(genes)
 
 

@@ -231,7 +231,7 @@ class Population(object):
                 self._next_pop[i] = self._next_pop[i].transpose_gene()
 
         # Then try one|two-point and gene crossover - exclude best
-        if self.crossover_one_point_rate and \
+        if self.size > 2 and self.crossover_one_point_rate and \
            random.random() < self.crossover_one_point_rate:
             ind1, ind2 = random.sample(xrange(1, self.size), 2)
             par1, par2 = self._next_pop[ind1], self._next_pop[ind2]
@@ -239,7 +239,7 @@ class Population(object):
             children = par1.crossover_one_point(par2)
             self._next_pop[ind1], self._next_pop[ind2] = children
 
-        if self.crossover_two_point_rate and \
+        if self.size > 2 and self.crossover_two_point_rate and \
            random.random() < self.crossover_two_point_rate:
             ind1, ind2 = random.sample(xrange(1, self.size), 2)
             par1, par2 = self._next_pop[ind1], self._next_pop[ind2]
@@ -247,7 +247,7 @@ class Population(object):
             children = par1.crossover_two_point(par2)
             self._next_pop[ind1], self._next_pop[ind2] = children
 
-        if self.crossover_gene_rate and \
+        if self.size > 2 and self.crossover_gene_rate and \
            random.random() < self.crossover_gene_rate:
             ind1, ind2 = random.sample(xrange(1, self.size), 2)
             par1, par2 = self._next_pop[ind1], self._next_pop[ind2]
