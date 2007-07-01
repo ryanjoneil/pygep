@@ -30,6 +30,8 @@ class Population(object):
     '''
     A Population instance has the following default configuration:
         - exclusion_level:          selection pressure (typically 1.5)
+        - rnc_array_length:         number of RNC possibilities (10)
+        
         - mutation_rate:            mutation rate (2 per chromosome)
         - inversion_rate:           inversion probability (0.1)
         - is_transposition_rate:    non-root transposition (0.1)
@@ -40,7 +42,7 @@ class Population(object):
         - crossover_one_point_rate: 1-point crossover rate (0.3)
         - crossover_two_point_rate: 2-point crossover rate (0.3)
         - crossover_gene_rate:      full gene crossover (0.1)
-
+        
     Mutation, by default, is set to a rate where it will modify
     about two loci per chromosome.  Example Population usage::
 
@@ -56,6 +58,8 @@ class Population(object):
             p.cycle() # recombine and select next generation
     '''
     exclusion_level          = 1.5
+    rnc_array_length         = 10
+    
     mutation_rate            = 0.0 # Set by __init__
     inversion_rate           = 0.1
     is_transposition_rate    = 0.1
@@ -84,11 +88,17 @@ class Population(object):
 
         self.__age = 0
 
+        if '?' in cls.terminals:
+            popgen = cls.generate(head, genes, linker,
+                rnc_len = self.rnc_array_length
+            )
+        else:
+            popgen = cls.generate(head, genes, linker)
+
         # Start an initial population
-        self.population = [i for _, i in izip(xrange(size),
-                           cls.generate(head, genes, linker))]
-        self._next_pop = [None] * size # placeholder for next generation
-        self._scaled   = [None] * size # fitness scaling
+        self.population = [i for _, i in izip(xrange(size), popgen)]
+        self._next_pop  = [None] * size # placeholder for next generation
+        self._scaled    = [None] * size # fitness scaling
 
         # Header for display purposes
         try:

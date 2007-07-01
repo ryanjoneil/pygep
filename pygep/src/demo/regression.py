@@ -18,7 +18,8 @@ class DataPoint(object):
 
         # The function we are trying to find
         # f(x) = 4*x^3 + 3x^2 + 2x + 1
-        self.y = 4*(x**3) + 3*(x**2) + (2*x) + 1
+        #self.y = 4*(x**3) + 3*(x**2) + (2*x) + 1
+        self.y = (2.718 * x**2) + (3.141636 * x)
 
     @staticmethod
     def populate():
@@ -33,7 +34,7 @@ class DataPoint(object):
 class Regression(Chromosome):
     REWARD = 1000.0
     functions = add_op, subtract_op, multiply_op, divide_op
-    terminals = 'x',
+    terminals = 'x', '?'
     
     def _fitness(self):
         # Fitness function: relative mean squared error
@@ -62,13 +63,13 @@ if __name__ == '__main__':
     p = Population(Regression, 30, 6, 4, sum_linker)
     print p
 
-    for _ in xrange(1000):
-        if p.best.solved:
-            break
-        p.cycle()
-        print
-        print p
-        
-    if p.best.solved:
-        print
-        print 'SOLVED:', p.best
+#    for _ in xrange(1000):
+#        if p.best.solved:
+#            break
+#        p.cycle()
+#        print
+#        print p
+#        
+#    if p.best.solved:
+#        print
+#        print 'SOLVED:', p.best

@@ -92,7 +92,7 @@ class KarvaGene(object):
                     name = str(allele)
 
             # If the name is not one char, surround it with { }
-            gene_str += name if len(name) == 1 else '{%s}' % name
+            gene_str += name if len(name) == 1 else '[%s]' % name
 
         return gene_str
 
@@ -175,6 +175,9 @@ class KarvaGene(object):
         '''Pulls attributes from obj into the evaluation list'''
         # Prepare our evaluation list -> results of expression evalation
         for terminal, indexes in self._terminals:
+            # TODO: '?' replacement
+            if terminal == '?':
+                continue
             temp = getattr(obj, terminal)
             for i in indexes:
                 self._evaluation[i] = temp
@@ -219,6 +222,7 @@ class KarvaGene(object):
         gene = copy(self)
         gene.alleles = new
         
+        # TODO: update same for DC changes
         if not same: # Recalculate coding region & kill memoized results
             gene._find_coding()
             try:

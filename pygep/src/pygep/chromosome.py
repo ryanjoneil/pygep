@@ -112,6 +112,8 @@ class Chromosome(object):
                 # Not required, but useful if the problem can
                 # be optimally solved.  Usually this just means
                 # checking self.fitness.
+    
+    TODO: document RNC behavior
     '''
     __metaclass__ = MetaChromosome
     __next_id = 1
@@ -125,27 +127,36 @@ class Chromosome(object):
     
 
     @classmethod
-    def generate(cls, head, genes=1, linker=default_linker):
+    def generate(cls, head, genes=1, linker=default_linker, 
+                 rnc_len=0, rnc_gen=lambda: random.randrange(4)):
         '''
         Returns a generator of random GEP chromosomes
-        @param head:   head length (min=0)
-        @param genes:  number of genes (min=1)
-        @param linker: linking function
+        @param head:    head length (min=0)
+        @param genes:   number of genes (min=1)
+        @param linker:  linking function
+        @param rnc_len: RNC array length
+        @param rnc_gen: RNC generator function
         '''
         tail = head * (cls.arity - 1) + 1
 
         while True:
             new_genes = [None] * genes
             for i in xrange(genes):
-                new_genes[i] = cls.gene_type(
-                    [random.choice(cls.symbols)   for _ in xrange(head)] + \
-                    [random.choice(cls.terminals) for _ in xrange(tail)], head
-                )
+                head_l = [random.choice(cls.symbols)   for _ in xrange(head)]
+                tail_l = [random.choice(cls.terminals) for _ in xrange(tail)]
+                if rnc_len:
+                    rnc_l = [random.randrange(rnc_len) for _ in xrange(tail)]
+                    dc    = [rnc_gen() for _ in xrange(rnc_len)]
+                else:
+                    rnc_l, dc = [], []
+                    
+                
+                new_genes[i] = cls.gene_type(head_l + tail_l + rnc_l, head)
 
-            yield cls(new_genes, head, linker)
+            yield cls(new_genes, head, linker, dc)
 
 
-    def __init__(self, genes, head, linker=default_linker):
+    def __init__(self, genes, head, linker=default_linker, dc=None):
         '''
         Instantiates a chromsome instance and analyzes it for evaluation.
         Sets the self.coding tuple to the last genes in the coding regions
@@ -157,6 +168,7 @@ class Chromosome(object):
         @param genes:  genes in the chromosome
         @param head:   length (not index) of the gene heads (min=0)
         @param linker: linker function for gene evaluation
+        @param dc:     pregenerated RNC domain
         '''
         # Must have at least one gene and a head length of 0
         if head < 0:
@@ -167,7 +179,8 @@ class Chromosome(object):
         self.genes  = genes
         self.head   = head
         self.linker = linker
-
+        self.dc     = dc
+        
         # Unique number of the organism
         self.__id = type(self).__next_id
         type(self).__next_id += 1
@@ -206,7 +219,10 @@ class Chromosome(object):
     @cache
     def __repr__(self):
         '''@return: repr of chromosome alleles'''
-        return ''.join(repr(g) for g in self.genes)
+        chrom_str = ''.join(repr(g) for g in self.genes)
+        if self.dc:
+            return '%s {%s}' % (chrom_str, ','.join(str(d) for d in self.dc))
+        return chrom_str
 
 
     def _child(self, genes):
