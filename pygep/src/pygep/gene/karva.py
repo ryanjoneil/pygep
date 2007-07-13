@@ -44,6 +44,7 @@ class KarvaGene(object):
         self.alleles = alleles
         self.head    = head
         self.coding  = 0
+        self.rnc     = len(alleles) - head - 1 # RNC region offset
         
         self._evaluation = self._terminals = []
         self._find_coding()
@@ -148,11 +149,6 @@ class KarvaGene(object):
         # attribute values do, this is perfectly safe.
         self._evaluation = self.alleles[:self.coding+1]
         
-        # TODO: consider converting NCs to floats in some future release
-        #for i, allele in enumerate(self._evaluation): # ints -> floats
-        #    if isinstance(allele, int):
-        #        self._evaluation[i] = float(allele)
-        
         # Pull out the attribute terminals by terminal name.  This constructs
         # a list of pairs containing attribute name and indexes:
         #
@@ -174,13 +170,17 @@ class KarvaGene(object):
     def _prepare_eval_attrs(self, obj):
         '''Pulls attributes from obj into the evaluation list'''
         # Prepare our evaluation list -> results of expression evalation
+        current_rnc = 0
         for terminal, indexes in self._terminals:
-            # TODO: '?' replacement
-            if terminal == '?':
-                continue
-            temp = getattr(obj, terminal)
-            for i in indexes:
-                self._evaluation[i] = temp
+            if terminal == '?': # RNC
+                for i in indexes:
+                    self._evaluation[i] = self.alleles[self.rnc + current_rnc]
+                    current_rnc += 1
+                
+            else: # terminal attribute
+                temp = getattr(obj, terminal)
+                for i in indexes:
+                    self._evaluation[i] = temp
     
         
     def derive(self, changes):
