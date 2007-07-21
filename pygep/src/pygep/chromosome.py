@@ -151,7 +151,7 @@ class Chromosome(object):
                     rnc_l, dc = [], []
                     
                 
-                new_genes[i] = cls.gene_type(head_l + tail_l + rnc_l, head)
+                new_genes[i] = cls.gene_type(head_l + tail_l + rnc_l, head, dc)
 
             yield cls(new_genes, head, linker, dc)
 

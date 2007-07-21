@@ -35,7 +35,7 @@ class KarvaGene(object):
     more genes.  Genes, in turn, are responsible for generating and
     caching evaluation results.
     '''
-    def __init__(self, alleles, head):
+    def __init__(self, alleles, head, dc=None):
         '''
         Instantiates a Karva style unigenic GEP chromosome
         @param alleles: list of individual loci for a given chromosome
@@ -45,6 +45,7 @@ class KarvaGene(object):
         self.head    = head
         self.coding  = 0
         self.rnc     = len(alleles) - head - 1 # RNC region offset
+        self.dc      = dc
         
         self._evaluation = self._terminals = []
         self._find_coding()
@@ -173,8 +174,10 @@ class KarvaGene(object):
         current_rnc = 0
         for terminal, indexes in self._terminals:
             if terminal == '?': # RNC
+                # TODO: this needs to pull from DC
                 for i in indexes:
-                    self._evaluation[i] = self.alleles[self.rnc + current_rnc]
+                    num = self.dc[self.alleles[self.rnc + current_rnc]]
+                    self._evaluation[i] = num
                     current_rnc += 1
                 
             else: # terminal attribute
