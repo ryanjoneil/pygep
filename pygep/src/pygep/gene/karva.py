@@ -143,7 +143,7 @@ class KarvaGene(object):
             args = next_args
 
         self.coding = index - 1
-        
+ 
         
         # The evaluation list only uses the coding region.  Since constants
         # done change from one run to the next, only expression results and
@@ -166,25 +166,31 @@ class KarvaGene(object):
                 sorted(terminals, key=first), key=first
             )
         ]
+        
+        
+        # Fill in ? terminals from the DC list
+        current_rnc = 0
+        for terminal, indexes in self._terminals:
+            if terminal == '?': # RNC symbol
+                for i in indexes:
+                    num = self.dc[self.alleles[self.rnc + current_rnc]]
+                    self._evaluation[i] = num
+                    current_rnc += 1
+                break
+
+        # This allows us to detect changes to the used RNCs on derivation
+        self._rncs_used = current_rnc
     
     
     def _prepare_eval_attrs(self, obj):
         '''Pulls attributes from obj into the evaluation list'''
         # Prepare our evaluation list -> results of expression evalation
-        current_rnc = 0
         for terminal, indexes in self._terminals:
-            if terminal == '?': # RNC
-                # TODO: this needs to pull from DC
-                for i in indexes:
-                    num = self.dc[self.alleles[self.rnc + current_rnc]]
-                    self._evaluation[i] = num
-                    current_rnc += 1
-                
-            else: # terminal attribute
+            if terminal != '?': # terminal attribute - non-RNC
                 temp = getattr(obj, terminal)
                 for i in indexes:
                     self._evaluation[i] = temp
-    
+       
         
     def derive(self, changes):
         '''
@@ -217,13 +223,19 @@ class KarvaGene(object):
                 # Does this change the coding region?
                 if same and index <= self.coding:
                     same = False
-            
+        
         if not new: # Nothing changed!
             return self
         
         # Create the new gene
         gene = copy(self)
         gene.alleles = new
+        
+        # See if any of the used RNCs changed.
+        if self._rncs_used:
+            my_rncs = self[self.rnc:self.rnc+self._rncs_used] 
+            if my_rncs != new[self.rnc:self.rnc+self._rncs_used]:
+                same = False
         
         # TODO: update same for DC changes
         if not same: # Recalculate coding region & kill memoized results

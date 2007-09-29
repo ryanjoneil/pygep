@@ -6,8 +6,10 @@ import unittest
 class KarvaTest(unittest.TestCase):
     '''Tests basic functionality of Karva genes'''
     def testDerivation(self):
-        gene = KarvaGene([subtract_op, '?', '?', 1, 0], 1, [2, 5])
-        self.assertEqual(gene._evaluation, [subtract_op, '?', '?'])
+        alleles = [subtract_op, '?', '?', 1, 0]
+        gene = KarvaGene(alleles, 1, [2, 5])
+        self.assertEqual(gene._evaluation, [subtract_op, 5, 2])
+        self.assertEqual(gene.alleles, alleles)
         
         # Make sure the RNCs are evaluated correctly
         o = object()
@@ -22,8 +24,13 @@ class KarvaTest(unittest.TestCase):
         self.assertNotEqual(gene2._evaluation, gene._evaluation)
         self.assertRaises(AttributeError, getattr, gene2, '___call___memo')
         
-        # TODO: test changes to DC
-        # TODO: RNC mutation/xover/etc
+        
+    def testDCDerivation(self):
+        '''TODO: test changes to DC'''
+        
+    
+    def testDCVariation(self):
+        '''TODO: RNC mutation/xover/etc'''
         
 
 if __name__ == '__main__':
